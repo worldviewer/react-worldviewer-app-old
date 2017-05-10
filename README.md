@@ -50,25 +50,31 @@ Since one of the primary objectives of the app is to teach the epistemological s
 
 Simulated feed data is now created for all five levels of discourse (worldview, model, propositional, concept and narrative) for the Halton Arp controversy.  This is the first time that this categorization scheme has actually been put to some sort of real-world application, and it seems to work pretty well.  I noticed along the way that it is not always obvious which of the model, propositional or conceptual categories that some piece of information should bin into (so users may need some assistance built into the app to guide them on this); I think the best strategy for this would be to include questions at the point of content submission (with links to jump to the other levels).  In total, I was able to generate 67 (!) sample feed submissions -- which should provide for an extremely realistic experience with the demo.
 
-## Next Steps
-
-### Create Feed Post Assets S3 Bucket for the Halton Arp Card
-
-The assets will be served from an S3 bucket.  It would have been nice to store them in the Netlify github workflow, but the problem is that this repository would have become extremely large in short order.  It's just not a scalable solution.  So, the current plan is to simply store all of the images on AWS and perhaps eventually tie the filenames to the github commit hashes (?), so that images can still work into this version control system for managing changes to the feed post markdown.
+## Next Steps: Prepare All Assets for the New Workflows
 
 ### Convert All Controversy Card Graphics to Image Pyramids and Upload them to S3
 
 I'll need to closely watch the file download sizes for mobile with this, and perhaps do some experiments in the beginning to see how deep the zoom should go for each image.
 
+Automated uploading to S3 is more trouble than it's worth, based upon the documentation, but automated image download and from G+ metadata and automated creation of the pyramid files is definitely doable.
+
+### Create Feed Post Assets S3 Bucket for the Halton Arp Card
+
+The assets will be served from an S3 bucket.  It would have been nice to store them in the Netlify github workflow, but the problem is that this repository would have become extremely large in short order.  It's just not a scalable solution.  So, the current plan is to simply store all of the images on AWS and perhaps eventually tie the filenames to the github commit hashes (?), so that images can still work into this version control system for managing changes to the feed post markdown.
+
 ### Add Markdown Processor to the Pre-Existing Scrape Script + Populate Halton Arp /cards Feed JSON with Processed Markdown and, if Necessary, Image Locations
 
 The big question with this is whether or not I should use front matter.  To do this, I will see if the Phenomic.io solution can serve my markdown processing needs.
+
+## Next Steps: Prepare Data and Routes for the New Workflows
 
 ### Add Image Pyramids to /metacards API
 
 ### Set up React Router
 
 To start, each level of discourse for each controversy should have a home.
+
+## Next Steps: Create New Pages
 
 ### Create Homepage
 
