@@ -50,11 +50,59 @@ Since one of the primary objectives of the app is to teach the epistemological s
 
 Simulated feed data is now created for all five levels of discourse (worldview, model, propositional, concept and narrative) for the Halton Arp controversy.  This is the first time that this categorization scheme has actually been put to some sort of real-world application, and it seems to work pretty well.  I noticed along the way that it is not always obvious which of the model, propositional or conceptual categories that some piece of information should bin into (so users may need some assistance built into the app to guide them on this); I think the best strategy for this would be to include questions at the point of content submission (with links to jump to the other levels).  In total, I was able to generate 67 (!) sample feed submissions -- which should provide for an extremely realistic experience with the demo.
 
-The immediate next step is create a script which can transform this markdown into JSON (so that I can retain an ability to modify it in its markdown format) and store all feed post assets on a CDN.  To do this, I will set up a consistent directory structure which the script can assume.
+## Next Steps
 
-Two looming next steps would be to (1) incorporate the React Router so that I can add in a controversy search homepage; and (2) incorporate Netlify's CMS so that I can begin to work in the posts for the feeds.
+### Create Feed Post Assets S3 Bucket for the Halton Arp Card
 
-### Part 1 - The Simulated Feed API Generator
+The assets will be served from an S3 bucket.  It would have been nice to store them in the Netlify github workflow, but the problem is that this repository would have become extremely large in short order.  It's just not a scalable solution.  So, the current plan is to simply store all of the images on AWS and perhaps eventually tie the filenames to the github commit hashes (?), so that images can still work into this version control system for managing changes to the feed post markdown.
+
+### Convert All Controversy Card Graphics to Image Pyramids and Upload them to S3
+
+I'll need to closely watch the file download sizes for mobile with this, and perhaps do some experiments in the beginning to see how deep the zoom should go for each image.
+
+### Add Markdown Processor to the Pre-Existing Scrape Script + Populate Halton Arp /cards Feed JSON with Processed Markdown and, if Necessary, Image Locations
+
+The big question with this is whether or not I should use front matter.  To do this, I will see if the Phenomic.io solution can serve my markdown processing needs.
+
+### Add Image Pyramids to /metacards API
+
+### Set up React Router
+
+To start, each level of discourse for each controversy should have a home.
+
+### Create Homepage
+
+Responsive.
+
+### Create Search
+
+Should be fine for the time being to just use the JSON from the /metacards endpoint
+
+### Create Search Results Page
+
+### Add Mobile Swipeable Panel for Controversy Card Text
+
+### Add Mobile Swipeable Panel for Worldview-Level Feed
+
+### Create Desktop Version of These Same Controversy Card Panels
+
+### Create Scrolling Aggregator Feed Page
+
+### Create a Design System for Navigating the Workflows
+
+### Create Authentication
+
+### Add in Comments
+
+### Add in Personalized Scrolling Aggregator Feeds
+
+### Create Feed Post Editor Workflow
+
+This is probably where we should bring in Netlify's CMS
+
+### Add in Sitewide Annotations
+
+## Part 1 - The Simulated Feed API Generator
 
 - Should convert markdown to unicode-encoded HTML
 - Should automatically convert zoomable images to dzi's
@@ -65,7 +113,7 @@ Two looming next steps would be to (1) incorporate the React Router so that I ca
 - Script must evaluate whether or not a particular feed item has changed, rather than mindlessly converting all entries
 - Save to db
 
-### Part 2 - The Feeds and Attached Messages
+## Part 2 - The Feeds and Attached Messages
 
 When it comes time to implement user submission of feed posts, I'll be taking a closer look at Netlify's Open Source Ecosystem described at https://www.netlify.com/open-source/.
 
@@ -73,7 +121,7 @@ When it comes time to implement user submission of feed posts, I'll be taking a 
     <img src="https://github.com/worldviewer/react-worldviewer-prototype/blob/master/doc/netlify-ecosystem.png" />
 </p>
 
-### Part 3 - The Worldviewer App Structure
+## Part 3 - The Worldviewer App Structure
 
 - This system is designed to create information gathering habits within information consumers.  The system should help people to adapt to the rules, but only go so far to adapt the rules to the information consumers' pre-existing information consumer habits.
 
