@@ -1,6 +1,6 @@
 {
-  "name": "react-worldviewer-prototype",
-  "homepage": "http://worldviewer.github.io/react-worldviewer-prototype",
+  "name": "react-worldviewer-app",
+  "homepage": "http://worldviewer.github.io/react-worldviewer-app",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {

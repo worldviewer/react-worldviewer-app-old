@@ -4,6 +4,8 @@ An implementation of the Controversies of Science application for crowdsourcing 
 
 I'm intentionally keeping this codebase separated from the react-worldviewer-prototype, which is an attempt to create an interactive infographic.  Although they are part of a similar effort, this aspect of the project is more focused on implementing actual workflows and crowdsourcing functionality.
 
+To see a live version of this work-in-progress, go to http://worldviewer.github.io/react-worldviewer-app.
+
 Setting the project up is simple.  Go to the root folder with `package.json`, and type:
 
     npm install
