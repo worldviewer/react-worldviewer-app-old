@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import TransitionGroup from 'react-addons-transition-group';
 import Bounce from '../../public/bounce.min.js';
 import './SwipeOverlay.scss';
@@ -9,8 +9,10 @@ import propositions from '../../public/science-structure-propositions.svg';
 import concepts from '../../public/science-structure-concepts.svg';
 import narratives from '../../public/science-structure-narratives.svg';
 
-const AnimatedSwipeOverlay = React.createClass({
-	getInitialState: function() {
+class AnimatedSwipeOverlay extends Component {
+	constructor(props) {
+		super(props);
+
 		this.splatIn = new Bounce();
 
 		this.splatIn
@@ -84,12 +86,12 @@ const AnimatedSwipeOverlay = React.createClass({
 				delay: 1750,
 				bounces: 4,
 				stiffness: 3
-			})		
+			})	
 
-		return null;
-	},
+		this.props = props;
+	}
 
-	swipedetect: function(el, callback) {
+	swipedetect(el, callback) {
 		let touchsurface = el,
 			swipedir,
 			startX,
@@ -138,30 +140,30 @@ const AnimatedSwipeOverlay = React.createClass({
 			// e.preventDefault();
 
 		}, false);
-	},
+	}
 
-	componentWillAppear: function(callback) {
+	componentWillAppear(callback) {
 		const el = this.element;
 		this.splatIn.applyTo(el, {onComplete: callback});
-	},
+	}
 
-	componentWillEnter: function(callback) {
+	componentWillEnter(callback) {
 		const el = this.element;
 		this.splatIn.applyTo(el, {onComplete: callback});
-	},
+	}
 
-	componentDidEnter: function() {
-	},
+	componentDidEnter() {
+	}
 
-	componentWillLeave: function(callback) {
+	componentWillLeave(callback) {
 		const el = this.element;
 		this.splatOut.applyTo(el, {remove: true, onComplete: callback});
-	},
+	}
 
-	componentDidLeave: function() {
-	},
+	componentDidLeave() {
+	}
 
-	componentDidMount: function() {
+	componentDidMount() {
 		const el = this.element;
 
 		this.swipedetect(el, swipedir => {
@@ -169,17 +171,17 @@ const AnimatedSwipeOverlay = React.createClass({
 				this.props.deactivateOverlayHandler();
 			}
 		});
-	},
+	}
 
-	componentWillReceiveProps: function(nextProps) {
+	componentWillReceiveProps(nextProps) {
 		const el = this.element;
 
 		if (this.splatChange && nextProps.discourseLevel !== this.props.discourseLevel) {
 			this.splatChange.applyTo(el);
 		}
-	},
+	}
 
-	getPosition: function(element) {
+	getPosition(element) {
 		var xPosition = 0;
 		var yPosition = 0;
 
@@ -190,9 +192,9 @@ const AnimatedSwipeOverlay = React.createClass({
 		}
 
 		return { x: xPosition, y: yPosition };
-	},
+	}
 
-	clickHandler: function(e) {
+	clickHandler(e) {
 		const
 			el = this.element,
 			y = e.clientY,
@@ -215,9 +217,9 @@ const AnimatedSwipeOverlay = React.createClass({
 		}
 
 		this.props.discourseHandler(level);
-	},
+	}
 
-	render: function() {
+	render() {
 		const
 			swipeOverlayContainerStyles = this.props.isFullScreen ?
 				{
@@ -257,10 +259,10 @@ const AnimatedSwipeOverlay = React.createClass({
 			</div>
 		)
 	}
-});
+}
 
-const SwipeOverlayStateless = React.createClass({
-	render: function() {
+class SwipeOverlayStateless extends Component {
+	render() {
 		return (
 			<TransitionGroup component="div">
 				{ this.props.active &&
@@ -273,6 +275,6 @@ const SwipeOverlayStateless = React.createClass({
 			</TransitionGroup>
 		);
 	}
-});
+}
 
 export default SwipeOverlayStateless;

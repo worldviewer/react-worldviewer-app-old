@@ -1,39 +1,39 @@
-import React from 'react';
+import React, { Component } from 'react';
 import TransitionGroup from 'react-addons-transition-group';
 import { TweenMax, Power4 } from 'gsap';
 import spinner from './explosion-spinner.svg';
 
-const AnimatedSpinner = React.createClass({
-	componentWillAppear: function(callback) {
+class AnimatedSpinner extends Component {	
+	componentWillAppear(callback) {
 		const el = this.container;
 
 		TweenMax.fromTo(el, 1, {scale:0, opacity:0},
 			{scale:1, opacity:1, ease:Power4.easeOut, onComplete: callback});
-	},
+	}
 
-	componentWillEnter: function(callback) {
+	componentWillEnter(callback) {
 		const el = this.container;
 
     	TweenMax.fromTo(el, .5, {scale:1.5, opacity:0},
     		{scale:1, opacity:1, ease:Power4.easeOut, onComplete: callback});
-	},
+	}
 
-	componentDidEnter: function(callback) {
-	},
+	componentDidEnter(callback) {
+	}
 
-	componentWillLeave: function(callback) {
+	componentWillLeave(callback) {
 	    const el = this.container;
 
 	    TweenMax.to(el, .5, {scale:0, opacity:0, onComplete: callback});
-	},
+	}
 
-	componentDidLeave: function() {
-	},
+	componentDidLeave() {
+	}
 
-	componentDidMount: function() {
-	},
+	componentDidMount() {
+	}
 
-	render: function() {
+	render() {
 		const spinnerStyle = {
 			alignItems: "center",
 			display: "flex",
@@ -54,10 +54,16 @@ const AnimatedSpinner = React.createClass({
 			</div>
 		)
 	}
-});
+}
 
-const Spinner = React.createClass({
-	render: function() {
+class Spinner extends Component {
+	constructor(props) {
+		super(props);
+
+		this.props = props;
+	}
+
+	render() {
 		return (
 			<TransitionGroup component="div">
 				<AnimatedSpinner
@@ -65,6 +71,6 @@ const Spinner = React.createClass({
 			</TransitionGroup>
 		);
 	}
-});
+}
 
 export default Spinner;

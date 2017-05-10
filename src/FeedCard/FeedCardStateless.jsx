@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './FeedCard.scss';
 import share from '../../public/share.svg';
 import Avatar from 'material-ui/Avatar';
@@ -9,23 +9,27 @@ import 'font-awesome-sass-loader';
 // Permits HTML markup encoding in feed text
 import { Parser as HtmlToReactParser } from 'html-to-react';
 
-const FeedCardStateless = React.createClass({
-	getInitialState: function() {
-		return {
+class FeedCardStateless extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
 			isTextExpanded: false
 		}
-	},
 
-	handleClick: function() {
+		this.props = props;
+	}
+
+	handleClick() {
 		this.setState({
 			isTextExpanded: !this.state.isTextExpanded
 		});
-	},
+	}
 
-	componentDidMount: function() {
-	},
+	componentDidMount() {
+	}
 
-	render: function() {
+	render() {
 		const
 			h = new HtmlToReactParser(),
 
@@ -114,6 +118,6 @@ const FeedCardStateless = React.createClass({
 			</div>
 		);
 	}
-});
+};
 
 export default FeedCardStateless;

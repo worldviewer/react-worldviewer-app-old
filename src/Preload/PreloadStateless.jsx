@@ -1,8 +1,9 @@
 // Code comes from https://github.com/sambernard/react-preload
 // Code has been modified in certain places.
 
-import { PropTypes, Component } from 'react';
+import { Component } from 'react';
 import ImageHelper from './ImageHelper';
+import PropTypes from 'prop-types';
 
 const propTypes = {
     // Rendered on success
