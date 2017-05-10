@@ -1,6 +1,8 @@
-# The Mobile-First Controversy Card Prototype
+# The Mobile-First Controversy Card App
 
-A GIS-inspired approach to visualizing discourse on scientific controversies, built in React.js for mobile devices.
+An implementation of the Controversies of Science application for crowdsourcing information on scientific controversies.
+
+I'm intentionally keeping this codebase separated from the react-worldviewer-prototype, which is an attempt to create an interactive infographic.  Although they are part of a similar effort, this aspect of the project is more focused on implementing actual workflows and crowdsourcing functionality.
 
 Setting the project up is simple.  Go to the root folder with `package.json`, and type:
 
@@ -38,127 +40,19 @@ A far more detailed explanation of the problem this project is solving is explai
     <img src="https://github.com/worldviewer/react-worldviewer-prototype/blob/master/doc/letter-from-ryan-dupee.png" />
 </p>
 
-## The Prototype Graphic
-
-The static graphic that I've chosen to convert into an interactive, deep-zoomable infographic ...
-
-<p align="center">
-    <img src="https://github.com/worldviewer/open-layers-worldviewer/blob/master/doc/halton-arp-the-modern-galileo-bbal-card-7percent-rez.jpg" />
-</p>
-
 ## The State of the Prototype
 
-See live mobile-friendly demo at https://worldviewer.github.io/react-worldviewer-prototype/.
-
-This project has been recently transitioned from Apigee / Usergrid to MongoDB / AWS Lambda / AWS S3.
-
-It's also now fully transitioned into Redux with a slideshow that can accommodate both direct interaction with overlays (the bubbles), as well as next/previous handling.  Each overlay can now accommodate an adjustable number of slides.  Deactivating an active overlay advances the slideshow to the next overlay -- similar to the way in which chapters function for a book.
-
-Parameterized overlay zooms are now done -- meaning that I can now pan and zoom through each bubble, from one slide to the next using the Greensock Animation Platform.
-
-Text and footnotes are also now associated with each slide in the Redux slideshow.  What remains are the quotes and audio for each slide.
-
-(By the end of this stage of the process, the meaning of the content will finally become clear.  That's when this will stop being just a strange toy, and start to exhibit the feel of an actual interactive infographic.)
-
-I've switched over to working on the other discourse layers, which are accessible via vertical swipes.  Each of these layers will be a distinct feed, so I've created a FeedCard component.
+To experience the discourse layers, swipe vertically.
 
 Since one of the primary objectives of the app is to teach the epistemological structure of science (and especially what a worldview is), I am now briefly showing a diagram of the users' current layer of discourse when they swipe vertically between them.
 
 Simulated feed data is now created for all five levels of discourse (worldview, model, propositional, concept and narrative) for the Halton Arp controversy.  This is the first time that this categorization scheme has actually been put to some sort of real-world application, and it seems to work pretty well.  I noticed along the way that it is not always obvious which of the model, propositional or conceptual categories that some piece of information should bin into (so users may need some assistance built into the app to guide them on this); I think the best strategy for this would be to include questions at the point of content submission (with links to jump to the other levels).  In total, I was able to generate 67 (!) sample feed submissions -- which should provide for an extremely realistic experience with the demo.
 
-The immediate next step is create a script which can transform this markdown into JSON (so that I can retain an ability to modify it in its markdown format).  To do this, I will set up a consistent directory structure which the script can assume.
+The immediate next step is create a script which can transform this markdown into JSON (so that I can retain an ability to modify it in its markdown format) and store all feed post assets on a CDN.  To do this, I will set up a consistent directory structure which the script can assume.
 
 Two looming next steps would be to (1) incorporate the React Router so that I can add in a controversy search homepage; and (2) incorporate Netlify's CMS so that I can begin to work in the posts for the feeds.
 
-### Part 1: The Infographic Frontend
-
-A common element for all of the enhanced controversy cards will be a deep-zoomable background which on zoom will eventually act as an interactive wall for discussion of the topic.
-
-#### The OpenSeadragon / DZI Deep Zoom Image Pyramid Background
-
-Clicking or pinching the background will zoom into it.
-
-The decision to use the OpenSeadragon/DZI deep zoom approach followed from the iPhone's viewport maximum-scale limitation of 10x zoom.  A prototype was constructed to test whether or not this would be sufficient to observe the smallest type within the existing graphics, and it was definitively observed to be a problem.  Since this 10x limit is non-negotiable, an alternative solution which could get us to far deeper zooms and far larger canvases was necessary.
-
-MagickSlicer was used to generate a DZI image pyramid for the large background jpeg (similar to how GIS mapping software works).  In short, these tools solve the problem -- even for mobile devices -- by breaking the graphic up into a grid.  This permits the loading of select tiles rather than the entire image.
-
-That image pyramid is now successfully serving through React.js on both mobile and desktop devices.
-
-OpenSeadragon supports a variety of tile sources.  It can work even with plain JPG images, but what I found through experimentation (and confirmed in the documentation) is that this is only true for desktop; zooming into a JPG image does not work on a mobile device.  The image will simply refuse to load.  Once the DZI pyramid image was created with MagickSlicer, the problem was resolved.
-
-#### Things Devs Should Know About OpenSeadragon
-
-- The path to the pyramid files must include a trailing slash (or the console will fill with tile errors).
-- The OpenSeadragon container must be specified in specific pixel amounts (or nothing will display).
-- Getting React.js to play with OpenSeadragon is no minor matter, as they are constructed on two very different notions: OpenSeadragon assumes that access to the DOM is readily available, whereas React of course begs to differ.  I'll over time be checking in with other React developers to get feedback on the current approach.
-- MagickSlicer generates a .dzi file and a directory.  The directory needs to be publicly accessible so that OpenSeadragon can reference the image pyramid by URL.  This is of course quite different from how most images are served.
-- I found that the easiest way to get the pyramid image data from the .dzi file into OpenSeadragon was to simply pass the XML directly into OpenSeadragon as parameters.  Once you do that, you can ditch the original .dzi file.  Looking at other online projects was very helpful for figuring this out.
-
-#### The Foreground Overlay Assets
-
-Since the 9 foreground information bubbles are overlays, they require transparent backgrounds -- and therefore cannot be JPG's.  The PNGs were processed by TinyPNG.com, reducing their total PNG filesizes by 60%.  This was more than just a measure to reduce the total asset size; at the uncompressed PNG sizes, mobile browsers would commonly crash during load.
-
-In the process of refactoring, some mobile functionality was at one point lost in that attempts to unzoom the bubbles no longer worked on either Safari or Chrome.  Safari's mobile developer tools proved incredibly useful for troubleshooting the problem ...
-
-<p align="center">
-    <img src="https://github.com/worldviewer/react-worldviewer-prototype/blob/master/doc/object-values-not-a-function.png" />
-</p>
-
-#### The Burger Menu
-
-I've coopted the npm package, `react-burger-menu` for displaying text.  Since this package was designed to host links -- and breaks when text is displayed -- I've brought the package into my project so that I can make significant edits to it.
-
-The code works great, but contains a lot of unnecessary bits which will be cleaned up at a later date.  The text can be accessed in two different ways: by clicking the Summary component or the burger icon which appears during deep zoom.
-
-#### GSAP Animations via ReactTransitionGroup
-
-I've brought in ReactTransitionGroup and GSAP ("the Swiss Army knife of animation") in order to get a more fine-grained control over animations at both load and component mount/unmount.  The explanation for the refactor is based upon the solution <a href="https://medium.com/@cheapsteak/animations-with-reacttransitiongroup-4972ad7da286#.8lzv3vt8z">here</a>.  There are three things to know about the ReactTransitionGroup approach:
-    (1) You must call the supplied callbacks that are supplied to the new lifecycle methods -- componentWillAppear, componentWillEnter, componentDidEnter, componentWillLeave and componentDidLeave -- after your animation ends, otherwise your component will enter but not leave (or leave but not enter).  I can validate that this is indeed the case.
-    (2) Because ReactTransitionGroup relies upon the new lifecycle methods which it introduces to exist, in order for these animations to link to those particular hooks, it's necessary to move the SomeComponents we want to animate into their own AnimatedSomeComponents.
-    (3) In the parent of AnimatedSomeComponent, SomeComponent, we must generate a ref attribute with `ref={c => this.container = c}` so that we can refer to the parent with `const el = this.container` inside of the child.
-
-A Note on Console Warnings:
-
-There is a line in `ReactTransitionGroup.js` which causes numerous console errors.  To resolve it, line 59 of that file has been changed to:
-
-    if (component && component.componentDidAppear) {
-
-... from ...
-
-    if (component.componentDidAppear) {
-
-### Part 2 - The Usergrid Backend that Wasn't Meant to Be
-
-A more detailed explanation of this first attempt at setting up a backend is here:
-
-https://github.com/worldviewer/react-worldviewer-prototype-usergrid
-
-My initial experiences with Usergrid were sub-optimal.  The command-line syntax is unintuitive.  It's difficult to attach more than one file to a Usergrid entity.  And I made it all the way to a functional backend before it became apparent that there is an issue with retrieving images from a Usergrid backend to a mobile device.
-
-### Part 3 - The Shiny New Serverless AWS Lambda / S3 CDN / mLab MongoDB Backend
-
-The new backend is currently built out with two AWS Lambda Node.js microservice deployments for the pair of API endpoints which fetch data from a mongoDB database hosted on mLab.
-
-An AWS S3 CDN bucket delivers static assets for the deep zoom image pyramid and the graphic overlays.
-
-Those microservices repos are here:
-
-- https://github.com/worldviewer/aws-lambda-mongo-cards-api
-- https://github.com/worldviewer/aws-lambda-mongo-metacards-api
-
-Typical controversy card JSON:
-
-<p align="center">
-    <img src="https://github.com/worldviewer/react-worldviewer-prototype/blob/master/doc/controversy-card-json.png" />
-</p>
-
-### Part 4 - The Controversies of Science Scrape Script
-
-While the social network is building out, new controversy cards will continue to post to the G+ collection.  A scraper script has been constructed to rapidly populate the mongo database.  That is here:
-
-https://github.com/worldviewer/controversy-api-mongodb
-
-### Part 5 - The Simulated Feed API Generator
+### Part 1 - The Simulated Feed API Generator
 
 - Should convert markdown to unicode-encoded HTML
 - Should automatically convert zoomable images to dzi's
@@ -169,15 +63,15 @@ https://github.com/worldviewer/controversy-api-mongodb
 - Script must evaluate whether or not a particular feed item has changed, rather than mindlessly converting all entries
 - Save to db
 
-### Part 6 - The Feeds and Attached Messages
+### Part 2 - The Feeds and Attached Messages
 
-This part of the app will be constructed using Netlify's Open Source Ecosystem described at https://www.netlify.com/open-source/.
+When it comes time to implement user submission of feed posts, I'll be taking a closer look at Netlify's Open Source Ecosystem described at https://www.netlify.com/open-source/.
 
 <p align="center">
     <img src="https://github.com/worldviewer/react-worldviewer-prototype/blob/master/doc/netlify-ecosystem.png" />
 </p>
 
-**The Worldviewer App Structure**
+### Part 3 - The Worldviewer App Structure
 
 - This system is designed to create information gathering habits within information consumers.  The system should help people to adapt to the rules, but only go so far to adapt the rules to the information consumers' pre-existing information consumer habits.
 
@@ -296,19 +190,6 @@ Expanded:
 ### The Mobile Safari Scroll Bug
 
 I've seen online that Mobile Safari has had various scrolling issues.  I seem to have one of my own now: A sudden swipe to the right on the Summary component permanently scrolls the infographic up off the screen by about 20%, which then sticks.  I've not seen this behavior in any of the other browsers -- just iOs Safari.
-
-## The Next Steps
-
-- Set up React Router
-- Set up Slides from JSON to control Bubble zoom state machine
-- Add the Controversies of Science logo to splash screen
-- Add controversy card text (deliver portions of text at a time)
-- Record audio of the text
-- Add audio support to slideshow (audio timestamps should control slideshow)
-- Add additional UI layers for concept, propositional and model levels (switch between them using vertical swiping)
-- Wrap megaboilerplate with auth around prototype (auth is only necessary to contribute -- not to read)
-- What I am ultimately working towards with this prototype is something similar to https://github.com/Emigre/openseadragon-annotations.  I want to be able to annotate the image pyramid and persist those annotations (although my annotations will not be hand-drawn drawings -- but rather more like interactive GIS icons with text labels, and other more structured annotation elements).  Based on advice from Rishat from codementor.io, I should keep track of the absolute canvas-based coordinates at all times in my React state, and use that zoom level and calculated box to determine whether or not to render any particular annotation overlay.  With this approach in mind, it may not be necessary to refer to the implementation above (?).
-- Mix in Stream social network feed API
 
 # The Backstory
 
@@ -518,87 +399,3 @@ My reaction to these and other realizations -- born of a decade of running and p
 **What we have yet to build is an Internet communication platform which is fundamentally designed to convince somebody of something which they've never before believed.**
 
 This is what I am building towards.
-
-## Why GIS
-
-GIS stands for Geographic Information System.  It's a software UI approach to mapping which stitches together layers of representation into a larger representation.  The choice of layers for a GIS map is of course carefully chosen to serve some sort of specific purpose.
-
-An example might look like this ...
-
-<p align="center">
-    <img src="https://github.com/worldviewer/open-layers-worldviewer/blob/master/doc/gis-layers.png" />
-</p>
-
-We'd be wise to ask, in light of the sophistication of these GIS tools today: *Can we repurpose this technology for the visualization of argumentation?*
-
-What I'm asking is: Can we map the structure of science ... this ...
-
-<p align="center">
-    <img src="https://github.com/worldviewer/open-layers-worldviewer/blob/master/doc/the-structure-of-science-bbal-card.jpg" />
-</p>
-
-... to the GIS software approach?
-
-I am going to make the case here that the answer is an emphatic *yes* -- and that once it is explained, you too will understand why this is in fact the inevitable solution to the argumentation visualization graveyard problem.
-
-I would take this even a step further that, in the light of upcoming technologies like virtual and augmented reality, this is what the future of *all* online discourse could eventually look like.
-
-## How to Map Discourse to GIS
-
-To take controversies out of their "flatworld" representation into a new "3-dimensional", modern representation, we start with the social media unit of information: the graphic with some sort of prominent summary.
-
-<p align="center">
-  <img src="https://github.com/worldviewer/open-layers-worldviewer/blob/master/doc/top-spot.jpg" />
-</p>
-
-I have attempted to document the pattern in my <a href="https://plus.google.com/collection/Yhn4Y">Controversies of Science</a> collection -- with a set which currently stands at almost 200 examples.  This has been fundamentally designed as a curriculum to teach the topic of scientific controversies.
-
-What I want to propose here is that each graphic could be much like a map which will have completely different representations depending upon the scale/zoom ...
-
-At the continent blue-marble scale of a traditional map, you see no country borders. You simply see terrain.
-
-At the country scale, you see no roads.
-
-At the scale of cities, you see no homes.
-
-Mapping software has been designed to solve this problem where you need to stitch these completely different layers together.
-
-Perhaps one reasonable approach would be to embed the epistemology of science into the zoom ...
-
-At the level of the graphic, you don't see any annotations. You just see the original graphic. This solves the original annotation problem which Google's Page wrestled with in college -- having this problem of the annotations cluttering the webpage to the point where the original content becomes inundated (a problem which he never actually revisited once he came up with PageRank ...).
-
-The history of the annotation technology is covered here ...
-
-<p align="center">
-    <img src="https://github.com/worldviewer/open-layers-worldviewer/blob/master/doc/the-annotation-of-scientific-papers-bbal-card.jpg" />
-</p>
-
-<a href="https://plus.google.com/+ChrisReeveOnlineScientificDiscourseIsBroken/posts/JTW1FYZbDYy">**The Annotation of Scientific Papers**</a>
-
-Zoom one scale down from the level of graphic, and perhaps you see the clash of worldviews.
-
-Zoom one scale below that for some particular claim, and you are in the world of models.
-
-Say you are interested in one particular model, so you dig into it deeper -- and now you are at the level of propositions.
-
-Yet even propositions have further structure, since they link together multiple concepts. So, drill yet one more down, and you are looking at concepts and constructs, the base layer of science.
-
-We are really at the ground level at this point, and perhaps the visualization m.o. switches at this point from 2d to 3d (?), so that concepts can be brought to life with actual 3d modeling software (science's own version of Minecraft).
-
-Each epistemological layer would visualize in a different manner, but also logically connect to one another like the branches of a tree.
-
-My premise is that if such a system was to exist, scientific controversies would no longer be this boring world which academics can get away with ignoring. We'd see a revival of the topic. Controversies would become a form of entertainment, and the academic community could no longer just ignore them.﻿
-
-If such an approach was combined with Gerald Pollack's plans for an Institute for Venture Science, we'd see modern science enter into a new era of innovation.
-
-<p align="center">
-    <img src="https://github.com/worldviewer/open-layers-worldviewer/blob/master/doc/the-institute-for-venture-science-process-bbal-card.jpg" />
-</p>
-
-<a href="https://plus.google.com/+ChrisReeveOnlineScientificDiscourseIsBroken/posts/GtfYqmXUYKX">**The Institute for Venture Science Peer Review Process**</a>
-
-<p align="center">
-    <img src="https://github.com/worldviewer/open-layers-worldviewer/blob/master/doc/support-your-local-universe.jpg" />
-</p>
-
-I'll use this repository to build out a prototype which demonstrates what this concept would look like.  I'll build out -- possibly in React and React Native (?) -- what a GIS interface to scientific controversies might look like.
