@@ -88,6 +88,8 @@ class AnimatedSwipeOverlay extends Component {
 				stiffness: 3
 			})	
 
+		this.clickHandler = this.clickHandler.bind(this);
+
 		this.props = props;
 	}
 

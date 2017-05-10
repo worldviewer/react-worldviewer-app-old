@@ -17,6 +17,7 @@ class FeedCardStateless extends Component {
 			isTextExpanded: false
 		}
 
+		this.handleClick = this.handleClick.bind(this);
 		this.props = props;
 	}
 
