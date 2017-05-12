@@ -82,7 +82,7 @@ Image Text (will have to be manually entered at some future date)
 Message Title
 Message Text
 
-I am currently thinking that Algolia provides a scalable solution to this problem which I believe that I can afford.
+I am currently attempting to import my JSON into Algolia.  They appear to have a size limit for individual records of only 10k, and they advise that records should be broken up if they exceed this amount.  For this reason, I am currently unable to import all of my JSON.  I've asked them to boost it up to 40-50k so that I can trial their tool.  So far, it looks like the perfect solution, but if I have to break these posts up by paragraph, it might add significant complexity to the markdown processing.
 
 ## Next Steps: Prepare All Assets for the New Workflows
 
