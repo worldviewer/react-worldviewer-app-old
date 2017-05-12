@@ -62,13 +62,11 @@ All controversy card image assets have now been uploaded to S3.  A similar treat
 
 But, as I go through that process, it's important to think about how search will happen, so that I can build out an approach which will scale well with the site's content.
 
-Since my dataset is still quite small, I can for now perform all of my controversy card searching on the client.  What this means is that all feed post text should for now exist within one single JSON file, so that I can hit the ground running with a reasonably functional search interface.
+I'm going to defer on message search until I decide on how to implement messaging (the solution may already come with a search interface).
 
-Clearly, messaging will also need to be added to these results, but I should defer that decision until I decide on how to implement it (the solution may already come with a messaging interface).
+There are client-side React components such as `react-fuzzy-search` which will allow for searches to have typos in them -- which would be extremely useful for science-related searches.  `react-fuzzy-search` also provides me with search score, and it fits the job as well because it allows me to search for particular fields within the JSON.
 
-There are client-side React components such as `react-fuzzy-search` which will allow for searches to have typos in them -- which is very important for science-related searches.  It provides me with an enormously useful search score, and it fits the job as well because it allows me to search for particular fields within the JSON.
-
-What it does not apparently do is permit me to rank hits based upon which of the JSON fields matched.  I want results to slightly favor this hierarchy:
+What it does not apparently do is permit me to rank hits based upon which of the JSON fields matched (something that, by contrast, comes standard with Algolia).  I want results to favor this hierarchy:
 
 - Controversy Card Title
 - Controversy Card Summary
