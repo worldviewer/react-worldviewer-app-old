@@ -60,15 +60,13 @@ Did a few passes through all of the controversy card images (1) to validate that
 
 All controversy card image assets have now been uploaded to S3.  A similar treatment will be required for the feed post images which have already been generated for the Halton Arp controversy card.
 
-But, as I go through that process, it's important to think about how search will happen, so that I can avoid locking myself into a bad approach.  I am currently looking at react-fuzzy-search here:
-
-https://www.npmjs.com/package/react-fuzzy-search
+But, as I go through that process, it's important to think about how search will happen, so that I can build out an approach which will scale well with the site's content.
 
 Since my dataset is still quite small, I can for now perform all of my controversy card searching on the client.  What this means is that all feed post text should for now exist within one single JSON file, so that I can hit the ground running with a reasonably functional search interface.
 
 Clearly, messaging will also need to be added to these results, but I should defer that decision until I decide on how to implement it (the solution may already come with a messaging interface).
 
-`react-fuzzy-search` will allow for searches to have typos in them -- which is very important for science-related searches.  It provides me with an enormously useful search score, and it fits the job as well because it allows me to search for particular fields within the JSON.
+There are client-side React components such as `react-fuzzy-search` which will allow for searches to have typos in them -- which is very important for science-related searches.  It provides me with an enormously useful search score, and it fits the job as well because it allows me to search for particular fields within the JSON.
 
 What it does not apparently do is permit me to rank hits based upon which of the JSON fields matched.  I want results to slightly favor this hierarchy:
 
@@ -84,9 +82,7 @@ Image Text (will have to be manually entered at some future date)
 Message Title
 Message Text
 
-I believe the correct solution to this -- which I need to test once the JSON structure is constructed -- is to create a wrapper component which contains two separate `<FuzzySearch />` components.
-
-I don't expect this solution to be valid for very long, though, because the component's input has an immutability requirement -- meaning that with each change to the search, the entire JSON must be copied to a new structure.  But, the good news is that once the site is functional, I can switch over to a more production-level solution like Algolia -- which would require me to submit a single JSON file anyways.
+I am currently thinking that Algolia provides a scalable solution to this problem which I believe that I can afford.
 
 ## Next Steps: Prepare All Assets for the New Workflows
 
