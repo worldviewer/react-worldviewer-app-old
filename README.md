@@ -88,13 +88,11 @@ The command for that would be
 
     ./magick-slicer -i large.jpg -p '-quality 100' -o ./pyramid
 
-It looks like whenever Image Magick switches from 256 to 512 tile width, the quality of the result suffers considerably.  Once I am ready to automate this process into a workflow, I'll have to fix all file-splitting to 256 width tiles.
+It looks like whenever Image Magick switches from 256 to 512 tile width, the quality of the result suffers considerably -- but oddly, I can just set the resolution to double the actual value (1024 --> 2048), and I regain my quality.  Once I am ready to automate this process into a workflow, I'll have to fix all file-splitting to 256 width tiles.
 
-## Next Steps: Prepare All Assets for the New Workflows
+All image assets are now up on S3.
 
-### Create Feed Post Assets S3 Bucket for the Halton Arp Card
-
-The assets will be served from an S3 bucket.  It would have been nice to store them in the Netlify github workflow, but the problem is that this repository would have become extremely large in short order.  It's just not a scalable solution.  So, the current plan is to simply store all of the images on AWS and perhaps eventually tie the filenames to the github commit hashes (?), so that images can still work into this version control system for managing changes to the feed post markdown.
+## Next Steps: Import the Feeds Markdown Text Into the Feeds JSON
 
 ### Add Markdown Processor to the Pre-Existing Scrape Script + Populate Halton Arp /cards Feed JSON with Processed Markdown and, if Necessary, Image Locations
 
