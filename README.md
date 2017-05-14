@@ -82,6 +82,14 @@ What it does not apparently do is permit me to rank hits based upon which of the
 
 I am currently attempting to import my JSON into Algolia.  They appear to have a size limit for individual records of only 10k, and they advise that records should be broken up if they exceed this amount.  For this reason, I am currently unable to import all of my JSON.  I've asked them to boost it up to 40-50k so that I can trial their tool.  So far, it looks like the perfect solution, but if I have to break these posts up by paragraph, it might add significant complexity to the markdown processing.
 
+I discovered that with small images, it's important to instruct Image Magick (through the Magick-Slicer options string) to bump the quality up to 100 (from its default of 92).  This seems to start mattering at around a resolution of 2048 x 2048.
+
+The command for that would be
+
+    ./magick-slicer -i large.jpg -p '-quality 100' -o ./pyramid
+
+It looks like whenever Image Magick switches from 256 to 512 tile width, the quality of the result suffers considerably.  Once I am ready to automate this process into a workflow, I'll have to fix all file-splitting to 256 width tiles.
+
 ## Next Steps: Prepare All Assets for the New Workflows
 
 ### Create Feed Post Assets S3 Bucket for the Halton Arp Card
