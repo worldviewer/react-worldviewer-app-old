@@ -94,6 +94,10 @@ All image assets are now up on S3.
 
 Some additional thought needs to go into thinking through the features I intend to build out in the coming months in order to identify what other fields the JSON should have.  For example, one thing that I need to do is to upload all of my existing graphics work for each controversy card each into their own large-format github repositories (https://git-lfs.github.com/) so that these graphics can be reformulated or improved by others.  Those repositories will exist on the Controversies of Science github account at https://github.com/controversies-of-science, so each card should have a repository location associated with it.
 
+I'm now generating JSON in a format which facilitates Algolia searching, and it will tell me exactly which paragraph the hit occurs on.  I was at first resistant on breaking up the content by paragraph, but now I am seeing benefits.  Having an ability to identify content by paragraph permits me to annotate by paragraph things like prepackaged shares, related controversy cards or user annotations.
+
+I'm now ready to move on to processing the feed markdown, and adding that to the Algolia search as well.
+
 ## Next Steps: Import the Feeds Markdown Text Into the Feeds JSON
 
 ### Add Markdown Processor to the Pre-Existing Scrape Script + Populate Halton Arp /cards Feed JSON with Processed Markdown and, if Necessary, Image Locations
