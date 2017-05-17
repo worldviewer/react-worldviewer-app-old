@@ -96,15 +96,13 @@ Some additional thought needs to go into thinking through the features I intend 
 
 I'm now generating JSON in a format which facilitates Algolia searching, and it will tell me exactly which paragraph the hit occurs on.  I was at first resistant on breaking up the content by paragraph, but now I am seeing benefits.  Having an ability to identify content by paragraph permits me to annotate by paragraph things like prepackaged shares, related controversy cards or user annotations.
 
-I'm now ready to move on to processing the feed markdown, and adding that to the Algolia search as well.
+Feed markdown is now importing into Algolia in paragraphs (even though there is some unexpected search result highlighting in Algolia).  There may still be some touch-up work left to do on this Algolia JSON, but I'll do it as I go.
 
-## Next Steps: Import the Feeds Markdown Text Into the Feeds JSON
+And I've now switched over to using the AWS CDN images for all Algolia search results, and I've spent some time refactoring my scrape script to make it easier to follow.  There is some work left to be done with regards to refactoring the image pyramid generator, but this is low priority.
 
-### Add Markdown Processor to the Pre-Existing Scrape Script + Populate Halton Arp /cards Feed JSON with Processed Markdown and, if Necessary, Image Locations
+This basically concludes the bulk of the data preparation for the app.
 
-The big question with this is whether or not I should use front matter.  To do this, I will see if the Phenomic.io solution can serve my markdown processing needs.
-
-## Next Steps: Prepare Data and Routes for the New Workflows
+## Next Steps: Prepare Routes for the New Workflows
 
 ### Add Image Pyramids to /metacards API
 
