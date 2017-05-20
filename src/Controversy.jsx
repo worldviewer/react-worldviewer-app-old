@@ -2,13 +2,13 @@ import { connect } from 'react-redux';
 import { fetchCard, fetchCardRequest, fetchCardSuccess, fetchCardError,
 	setLoaded, setDiscourseLevel, activateSwipeOverlay,
 	deactivateSwipeOverlay, setSwipeOverlaySize } from './redux';
-import AppStateless from './AppStateless.jsx';
+import ControversyStateless from './ControversyStateless.jsx';
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		card: state.card,
-		base: state.base,
-		discourse: state.discourse
+		card: state.reducer.card,
+		base: state.reducer.base,
+		discourse: state.reducer.discourse
 	};
 };
 
@@ -44,9 +44,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	};
 };
 
-const App = connect(
+const Controversy = connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(AppStateless);
+)(ControversyStateless);
 
-export default App;
+export default Controversy;

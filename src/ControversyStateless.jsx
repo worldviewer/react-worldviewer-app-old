@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './App.scss';
+import './Controversy.scss';
 
 import Spinner from './Spinner/Spinner.jsx';
 import Preload from './Preload/Preload.jsx';
@@ -14,7 +14,7 @@ import debounce from 'debounce';
 // Permits HTML markup encoding in controversy card text
 import { Parser as HtmlToReactParser } from 'html-to-react';
 
-class AppStateless extends Component {
+class ControversyStateless extends Component {
 	constructor(props) {
 		super(props);
 
@@ -75,6 +75,8 @@ class AppStateless extends Component {
 				height: '100vh'
 			};
 
+		console.log(this.props);
+
 		return (
 			<div ref={c => this.container = c}>
 				<SwipeOverlay
@@ -117,4 +119,4 @@ class AppStateless extends Component {
 	}
 }
 
-export default AppStateless;
+export default ControversyStateless;
