@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import SwipeOverlayStateless from './SwipeOverlayStateless.jsx';
+import SwipeOverlayComponent from './SwipeOverlayComponent.jsx';
 // import clickOverlay from '../redux';
 
 const mapStateToProps = (state, ownProps) => {
@@ -15,6 +15,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const SwipeOverlay = connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(SwipeOverlayStateless);
+)(SwipeOverlayComponent);
 
 export default SwipeOverlay;

@@ -40,7 +40,7 @@ const defaultProps = {
     loadingIndicator: null,
 };
 
-class PreloadStateless extends Component {
+class PreloadComponent extends Component {
     constructor(props) {
         super(props);
 
@@ -138,7 +138,7 @@ class PreloadStateless extends Component {
     }
 }
 
-PreloadStateless.propTypes = propTypes;
-PreloadStateless.defaultProps = defaultProps;
+PreloadComponent.propTypes = propTypes;
+PreloadComponent.defaultProps = defaultProps;
 
-export default PreloadStateless;
+export default PreloadComponent;

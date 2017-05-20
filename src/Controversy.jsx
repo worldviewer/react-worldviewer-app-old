@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { fetchCard, fetchCardRequest, fetchCardSuccess, fetchCardError,
 	setLoaded, setDiscourseLevel, activateSwipeOverlay,
 	deactivateSwipeOverlay, setSwipeOverlaySize } from './redux';
-import ControversyStateless from './ControversyStateless.jsx';
+import ControversyComponent from './ControversyComponent.jsx';
 
 const mapStateToProps = (state, ownProps) => {
 	return {
@@ -47,6 +47,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const Controversy = connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(ControversyStateless);
+)(ControversyComponent);
 
 export default Controversy;

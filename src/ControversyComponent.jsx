@@ -14,7 +14,7 @@ import debounce from 'debounce';
 // Permits HTML markup encoding in controversy card text
 import { Parser as HtmlToReactParser } from 'html-to-react';
 
-class ControversyStateless extends Component {
+class ControversyComponent extends Component {
 	constructor(props) {
 		super(props);
 
@@ -75,8 +75,6 @@ class ControversyStateless extends Component {
 				height: '100vh'
 			};
 
-		console.log(this.props);
-
 		return (
 			<div ref={c => this.container = c}>
 				<SwipeOverlay
@@ -119,4 +117,4 @@ class ControversyStateless extends Component {
 	}
 }
 
-export default ControversyStateless;
+export default ControversyComponent;

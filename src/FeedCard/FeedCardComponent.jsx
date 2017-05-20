@@ -9,7 +9,7 @@ import 'font-awesome-sass-loader';
 // Permits HTML markup encoding in feed text
 import { Parser as HtmlToReactParser } from 'html-to-react';
 
-class FeedCardStateless extends Component {
+class FeedCardComponent extends Component {
 	constructor(props) {
 		super(props);
 
@@ -121,4 +121,4 @@ class FeedCardStateless extends Component {
 	}
 };
 
-export default FeedCardStateless;
+export default FeedCardComponent;

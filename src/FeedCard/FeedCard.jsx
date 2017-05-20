@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import FeedCardStateless from './FeedCardStateless.jsx';
+import FeedCardComponent from './FeedCardComponent.jsx';
 
 const mapStateToProps = (state, ownProps) => {
 	return {
@@ -14,6 +14,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const FeedCard = connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(FeedCardStateless);
+)(FeedCardComponent);
 
 export default FeedCard;

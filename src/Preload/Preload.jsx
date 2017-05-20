@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchCard, fetchCardRequest, fetchCardSuccess, fetchCardError } from '../redux';
-import PreloadStateless from './PreloadStateless.jsx';
+import PreloadComponent from './PreloadComponent.jsx';
 
 const mapStateToProps = (state, ownProps) => {
 	return {
@@ -31,6 +31,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const Preload = connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(PreloadStateless);
+)(PreloadComponent);
 
 export default Preload;
