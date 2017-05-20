@@ -102,9 +102,7 @@ And I've now switched over to using the AWS CDN images for all Algolia search re
 
 This basically concludes the bulk of the data preparation for the app.
 
-### Set up React Router
-
-To start, each level of discourse for each controversy should have a home.
+I've successfully brought React Router Redux into the app, and the next step is to set up routes for all of the pages.  Very exciting!
 
 ### Create Homepage
 
@@ -114,7 +112,11 @@ Responsive.
 
 I've already begun the process of setting this up on Algolia.  What remains is to drop the widgets into the page and configure/style them as desired.  It would be smart to use as much of the page as possible to display these search results.
 
-### Create Search Results Page
+The page will populate with autocomplete suggestions.
+
+### Create Controversy Card Page
+
+The left-right swipes should mirror the desktop layout.
 
 ### Add Mobile Swipeable Panel for Controversy Card Text
 
