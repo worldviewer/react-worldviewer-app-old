@@ -102,15 +102,9 @@ And I've now switched over to using the AWS CDN images for all Algolia search re
 
 This basically concludes the bulk of the data preparation for the app.
 
-## Next Steps: Prepare Routes for the New Workflows
-
-### Add Image Pyramids to /metacards API
-
 ### Set up React Router
 
 To start, each level of discourse for each controversy should have a home.
-
-## Next Steps: Create New Pages
 
 ### Create Homepage
 
@@ -118,7 +112,7 @@ Responsive.
 
 ### Create Search
 
-Should be fine for the time being to just use the JSON from the /metacards endpoint
+I've already begun the process of setting this up on Algolia.  What remains is to drop the widgets into the page and configure/style them as desired.  It would be smart to use as much of the page as possible to display these search results.
 
 ### Create Search Results Page
 
@@ -140,7 +134,7 @@ Should be fine for the time being to just use the JSON from the /metacards endpo
 
 ### Create Feed Post Editor Workflow
 
-This is probably where we should bring in Netlify's CMS
+This is probably where we should bring in Netlify's CMS.  This will probably be the most time-consuming portion of the entire project.
 
 ### Add in Sitewide Annotations
 
