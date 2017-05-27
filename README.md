@@ -110,15 +110,156 @@ Responsive.
 
 ### Create Search
 
-I've already begun the process of setting this up on Algolia.  What remains is to drop the widgets into the page and configure/style them as desired.  It would be smart to use as much of the page as possible to display these search results.
+    http://www.controversiesofscience.com/search
+    http://www.controversiesofscience.com/search?s='halton'
 
-The page will populate with autocomplete suggestions.
+I've already begun the process of setting this up on Algolia.  What remains is to drop the widgets into the page and configure/style them as desired.  It would be smart to use as much of the page as possible to display these search results in response to autocompletes, as it would help the user to more quickly sift through the results to get to their intended destination faster.
 
 ### Create Controversy Card Page
 
 The left-right swipes should mirror the desktop layout.
 
+### Set Up Routing
+
+#### URL Length
+
+URL's should generally be between 50-60 characters.  That means I have to shorten `halton-arp-the-modern-galileo` to just `arp` or `halton-arp`, and I should remove `/cards/` within the path.
+
+Example (~56 characters):
+
+    http://www.controversiesofscience.com/arp/worldview/text
+    http://www.controversiesofscience.com/arp/worldview/comments
+    http://www.controversiesofscience.com/arp/worldview/card
+
+or (~67 characters):
+
+    http://www.controversiesofscience.com/halton-arp/worldview/comments
+
+or by layers (longest is 71 characters):
+
+    http://www.controversiesofscience.com/halton-arp/model/comments
+    http://www.controversiesofscience.com/halton-arp/propositional/comments
+    http://www.controversiesofscience.com/halton-arp/conceptual/comments
+    http://www.controversiesofscience.com/halton-arp/narrative/comments
+
+or with long feed (~110 characters):
+
+    http://www.controversiesofscience.com/arp/worldview/feeds/high-redshift-quasar-in-front-of-low-redshift-galaxy
+
+#### Hash Links
+
+For going to specific parts of the page:
+
+    http://www.controversiesofscience.com/arp/worldview/text#footnotes
+    http://www.controversiesofscience.com/arp/worldview/text#footnote-1
+    http://www.controversiesofscience.com/arp/worldview/text#annotations
+    http://www.controversiesofscience.com/arp/worldview/text#paragraph-1
+    http://www.controversiesofscience.com/arp/worldview/text#<keyword>-quote
+    http://www.controversiesofscience.com/arp/worldview/text#quotes
+
+The quote could be automatically mined from the quote's body by identifying the first non-stop-word label not already reserved as an id for that page.  For instance, if the quote was ...
+
+    "'Space' was invented on Earth before we knew what was out there"
+
+... the keyword would be `space` and the url would look like:
+
+    http://www.controversiesofscience.com/arp/worldview/text#space-quote
+
+What would be ideal is even if the quote is broken up by paragraphs, there exists a span which can be used to identify the end of each quote, so that it can be selected, annotated and shared as a distinct unit.
+
+And if there are other versions of the quote which might be better for sharing -- like with some words or content left out -- that they are also available:
+
+    http://www.controversiesofscience.com/arp/worldview/text#short-space-quote
+
+With relevant image:
+
+    http://www.controversiesofscience.com/arp/worldview/text#short-space-quote-with-image
+
+Or adding in a reference too:
+
+    http://www.controversiesofscience.com/arp/worldview/text#short-space-quote-with-image-and-reference
+
+Or use to go straight to best comments:
+
+    http://www.controversiesofscience.com/arp#best-comments
+    http://www.controversiesofscience.com/arp#best-comment-1
+
+When it comes to any of the `best-` hash links, they will be determined based upon the ratings schema.  To qualify as a best, it's of course not necessary to rank high by all standards.  It can just score high by one metric amongst some minimum number of individuals (perhaps 3?), who must agree by metric.
+
+One question is: On the `/card` route, if this should aggregate from all feeds and cards (probably).
+
+Or best questions for a controversy card:
+
+    http://www.controversiesofscience.com/arp#best-questions
+
+It might (?) make sense, in such cases, to redirect, so that content is not being duplicated across pages:
+
+    http://www.controversiesofscience.com/arp/propositional#best-questions
+
+There is a discussion of how to handle hashes with React Router at:
+
+    https://github.com/ReactTraining/react-router/issues/394
+    https://github.com/rafrex/react-router-hash-link
+
+What would be nice is to spawn a dynamic hash link handler in the event that a hash link is not found on the page.
+
+#### User-Generated Zoom Hash Links
+
+Another *really* nice feature would be to permit users to create their own zoom frame id's for a particular graphic which would not only take the site visitor to the controversy card image, but also zoom them into the frame that has been associated with that id.  A user could create that frame and id by clicking a button while they are at some particular zoom level.  If specified as "public", these frame snapshots could subsequently be invoked by other users because they would then list on the page under ...
+
+    http://www.controversiesofscience.com/arp/worldview/card#shares
+    http://www.controversiesofscience.com/arp/worldview/card#best-shares
+    http://www.controversiesofscience.com/arp/worldview/card#<user-specified keyword>-share
+    http://www.controversiesofscience.com/arp/worldview/card#ngc4603-share
+
+I don't know how hard it would be to do that, but if it proves impossible, it is probably still an option to use a route:
+
+    http://www.controversiesofscience.com/arp/worldview/card/ngc4603-share
+
+The thing about this is that the page cannot possibly contain all of these images (or even thumbnails) from former shares, so the way to do this would be to store them in an S3 bucket when they are generated, and then if a person goes to them, only then fetch them from the bucket.
+
+#### Content-Based Shares
+
+    http://www.controversiesofscience.com/arp/worldview/text#short-space-quote-twitter-share
+
+Possible?
+
+#### Annotation Hash Links
+
+An interesting question is where `#annotations` takes a person, since they are distributed across the page.  And should there be an option to turn the annotations off?
+
+    http://www.controversiesofscience.com/arp/worldview/text?annotations=off
+
+That could be useful in some situations.
+
+#### Username Hash Links
+
+    http://www.controversiesofscience.com/arp/worldview/comments#juancalsiano
+
+Ideally, this would scroll to that first of that particular user's comments, while graying out all others.  And perhaps once it gets there, change the URL to ...
+
+    http://www.controversiesofscience.com/arp/worldview/comments#juancalsiano-1
+
+All of this could be tricky to do since the person can of course have more than one comment, and yet we should only assign one single id on a page.  It might be better to implement the content tagging as classnames, and see if I can interpret the hash link using React Router.
+
+#### Rebuttals
+
+    http://www.controversiesofscience.com/arp#best-rebuttals
+    http://www.controversiesofscience.com/arp#rebuttals
+
 ### Add Mobile Swipeable Panel for Controversy Card Text
+
+One important question is how to handle the original content.  It stands to reason that this will be an issue that content generators will be interested in upfront.
+
+One thing that might be interesting -- for mobile -- is if the text screen was to be split in two, with top being our version and bottom being the original, fetched in real-time from site.  Then, as the reader scrolls through the annotated excerpts, the relevant original automatically appears below.  This could possibly even be programmed to scroll the original.
+
+We could of course allow the user to close the original content half, but at least insist that they must click to do it.  This is a great solution which is sort of similar to SmartNews' approach.  The key value of that is that it permits the ads that are attached to the original content to appear on the page.
+
+It can be turned off with:
+
+    http://www.controversiesofscience.com/arp/worldview/text?original=off
+
+On a desktop, there is of course no issue because we can simply add in another pane next to the text.
 
 ### Add Mobile Swipeable Panel for Worldview-Level Feed
 
@@ -128,7 +269,9 @@ The left-right swipes should mirror the desktop layout.
 
 ### Create a Design System for Navigating the Workflows
 
-### Create Authentication
+### Create Sign Up & Authentication
+
+We should advise that people think carefully about their usernames.  If their objective is to participate, yet still remain anonymous, they are free to assign a psuedoynm to their OAuth (but we will still know who you are).  However, we will recommend that people generally use their real names using OAuth.  In all cases, the site should enforce usage of an OAuth login.
 
 ### Add in Comments
 
