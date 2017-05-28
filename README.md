@@ -184,8 +184,6 @@ Or use to go straight to best comments:
     http://www.controversiesofscience.com/arp#best-comments
     http://www.controversiesofscience.com/arp#best-comment-1
 
-When it comes to any of the `best-` hash links, they will be determined based upon the ratings schema.  To qualify as a best, it's of course not necessary to rank high by all standards.  It can just score high by one metric amongst some minimum number of individuals (perhaps 3?), who must agree by metric.
-
 One question is: On the `/card` route, if this should aggregate from all feeds and cards (probably).
 
 Or best questions for a controversy card:
@@ -260,6 +258,12 @@ It can be turned off with:
     http://www.controversiesofscience.com/arp/worldview/text?original=off
 
 On a desktop, there is of course no issue because we can simply add in another pane next to the text.
+
+#### Best Content
+
+When it comes to any of the `best-` hash links, they will be determined based upon the ratings schema.  To qualify as a best, it's of course not necessary to rank high by all standards.  It can just score high by one metric amongst some minimum number of individuals (perhaps 3?), who must agree by metric.
+
+One way to implement this might be to create 3 rating-sorted spaces at the top of comments for best comments; a rating-sorted list beneath the card text for best annotations; beneath the card graphic for best zoom shares; at the top of the propositional view for best questions (etc).  In each case, clicking them would take you to the actual home for the content.  And in each case, a "More ..." dropdown is available to fold out an expanded list.
 
 ### Add Mobile Swipeable Panel for Worldview-Level Feed
 
