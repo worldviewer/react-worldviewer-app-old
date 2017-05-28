@@ -108,16 +108,29 @@ I've successfully brought React Router Redux into the app, and the next step is 
 
 Responsive.
 
+When people come to the homepage, I want to immediately expose them to both search and "news".  News is a set of auto-scrolling feeds which indicate real-time activity on the site.  On mobile, it would be just one (the aggregate of all of them).  As the page expands in width, the feed width will also expand and include images.  At a certain minimum width, the news feeds will break up by category, and the names of each of the categories will head each feed.
+
+If the user's session is tracked since their last visit, and the screen space is available, it might also make sense to stick to the top of each feed the most highly-rated new content.
+
 ### Create Search
 
     http://www.controversiesofscience.com/search
-    http://www.controversiesofscience.com/search?s='halton'
+    http://www.controversiesofscience.com/search?q=halton+arp
+    http://www.controversiesofscience.com/search?category=ongoing&q=halton+arp
 
 I've already begun the process of setting this up on Algolia.  What remains is to drop the widgets into the page and configure/style them as desired.  It would be smart to use as much of the page as possible to display these search results in response to autocompletes, as it would help the user to more quickly sift through the results to get to their intended destination faster.
 
 ### Create Controversy Card Page
 
 The left-right swipes should mirror the desktop layout.
+
+### Create Scrolling Aggregated Controversy News Page
+
+The feeds can be toggled between level and category views, or can be set to view a particular category or level.
+
+    http://www.controversiesofscience.com/news
+    http://www.controversiesofscience.com/news?category=historical
+    http://www.controversiesofscience.com/news?level=propositional
 
 ### Set Up Routing
 
@@ -240,7 +253,7 @@ Ideally, this would scroll to that first of that particular user's comments, whi
 
 All of this could be tricky to do since the person can of course have more than one comment, and yet we should only assign one single id on a page.  It might be better to implement the content tagging as classnames, and see if I can interpret the hash link using React Router.
 
-#### Rebuttals
+#### Rebuttal Hash Links
 
     http://www.controversiesofscience.com/arp#best-rebuttals
     http://www.controversiesofscience.com/arp#rebuttals
@@ -269,9 +282,14 @@ One way to implement this might be to create 3 rating-sorted spaces at the top o
 
 ### Create Desktop Version of These Same Controversy Card Panels
 
-### Create Scrolling Aggregator Feed Page
+### Create Notifications Page
 
-### Create a Design System for Navigating the Workflows
+    http://www.controversiesofscience.com/notifications
+    http://www.controversiesofscience.com/arp/notifications
+
+Second example is for creating or editing a new notification, whereas the first is for managing all of a user's notifications.  Requires a session.
+
+### Create a Consistent Design System for Navigating the Workflows
 
 ### Create Sign Up & Authentication
 
@@ -287,7 +305,17 @@ This is probably where we should bring in Netlify's CMS.  This will probably be 
 
 ### Add in Sitewide Annotations
 
-## Part 1 - The Simulated Feed API Generator
+### Create Submit Controversy Form
+
+### Create Summary Endpoint
+
+This would be a different format of the controversy card that is more focused on the title and text of the card rather than the graphic.  It could be useful for sharing.  It might also make sense here to emphasize the content of the small-form circular annotation icon.
+
+    http://www.controversiesofscience.com/arp/summary
+
+Should probably come with links to explore further, and depending on the screen size available, might also contain an aggregated view of all of the card metadata.
+
+## part 1 - The Simulated Feed API Generator
 
 - Should convert markdown to unicode-encoded HTML
 - Should automatically convert zoomable images to dzi's
