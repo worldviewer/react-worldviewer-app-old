@@ -102,7 +102,7 @@ And I've now switched over to using the AWS CDN images for all Algolia search re
 
 This basically concludes the bulk of the data preparation for the app.
 
-I've successfully brought React Router Redux into the app, and the next step is to set up routes for all of the pages.  Very exciting!
+I've successfully brought React Router Redux into the app, the router is now working as it should, and there is boilerplate in place now for each of the destinations I'll be creating in the coming week.
 
 ### Create Homepage
 
