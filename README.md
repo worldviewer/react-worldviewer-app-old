@@ -104,6 +104,10 @@ This basically concludes the bulk of the data preparation for the app.
 
 I've successfully brought React Router Redux into the app, the router is now working as it should, and there is boilerplate in place now for each of the destinations I'll be creating in the coming week.
 
+The next step is to set up a short-form slug for each controversy.  This should live within the API, so it will need to be manually generated for each controversy.  The router should use this list to identify valid controversies.
+
+The same sort of thing should be done for feeds.  This will ensure that the no-matches are properly catching.
+
 ### Create Homepage
 
 Responsive.
