@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { fetchCard, fetchCardRequest, fetchCardSuccess, fetchCardError,
 	setLoaded, setDiscourseLevel, activateSwipeOverlay,
-	deactivateSwipeOverlay, setSwipeOverlaySize } from './redux';
+	deactivateSwipeOverlay, setSwipeOverlaySize } from '../redux';
 import ControversyComponent from './ControversyComponent.jsx';
 
 const mapStateToProps = (state, ownProps) => {

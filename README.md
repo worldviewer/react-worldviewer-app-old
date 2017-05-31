@@ -112,6 +112,12 @@ When people come to the homepage, I want to immediately expose them to both sear
 
 If the user's session is tracked since their last visit, and the screen space is available, it might also make sense to stick to the top of each feed the most highly-rated new content.
 
+If user clicks into search box, the search box slides up and page transforms into the search page.  This is especially important on mobile, so that there can be room for search box, keyboard and search results.
+
+User can alternatively swipe the feed upwards, in order to get rid of search on a mobile device.
+
+There should also be controls on mobile for switching between the various types of aggregated feeds.  These might only show up after more space is made available to the news feeds (after mentioned swipe up).
+
 ### Create Search
 
     http://www.controversiesofscience.com/search
@@ -157,7 +163,7 @@ or by layers (longest is 71 characters):
 
 or with long feed (~110 characters):
 
-    http://www.controversiesofscience.com/arp/worldview/feeds/high-redshift-quasar-in-front-of-low-redshift-galaxy
+    http://www.controversiesofscience.com/arp/worldview/high-redshift-quasar-in-front-of-low-redshift-galaxy
 
 #### Hash Links
 

@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import './Controversy.scss';
 
-import Spinner from './Spinner/Spinner.jsx';
-import Preload from './Preload/Preload.jsx';
+import Spinner from '../Spinner/Spinner.jsx';
+import Preload from '../Preload/Preload.jsx';
 import SwipeableViews from 'react-swipeable-views';
-import FeedCard from './FeedCard/FeedCard.jsx';
-import SwipeOverlay from './SwipeOverlay/SwipeOverlay.jsx';
+import FeedCard from '../FeedCard/FeedCard.jsx';
+import SwipeOverlay from '../SwipeOverlay/SwipeOverlay.jsx';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import 'font-awesome-sass-loader';

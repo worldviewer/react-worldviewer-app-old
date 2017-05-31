@@ -15,7 +15,7 @@ class FeedCardComponent extends Component {
 
 		this.state = {
 			isTextExpanded: false
-		}
+		};
 
 		this.handleClick = this.handleClick.bind(this);
 		this.props = props;
